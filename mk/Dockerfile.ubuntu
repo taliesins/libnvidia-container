@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         libcap-dev \
         libelf-dev \
+        libntirpc-dev \
         libseccomp-dev \
         lintian \
         lsb-release \
@@ -40,8 +41,8 @@ WORKDIR /tmp/libnvidia-container
 COPY . .
 
 ARG WITH_NVCGO=no
-ARG WITH_LIBELF=no
-ARG WITH_TIRPC=no
+ARG WITH_LIBELF=yes
+ARG WITH_TIRPC=yes
 ARG WITH_SECCOMP=yes
 ENV WITH_NVCGO=${WITH_NVCGO}
 ENV WITH_LIBELF=${WITH_LIBELF}

@@ -84,6 +84,13 @@ trigger-pipeline:
   variables:
     DIST: ubuntu18.04
 
+.dist-ubuntu20.04:
+  variables:
+    DIST: ubuntu20.04
+
+.dist-ubuntu22.04:
+  variables:
+    DIST: ubuntu22.04
 # Define architecture targets
 .arch-aarch64:
   variables:
@@ -115,6 +122,8 @@ package-centos7-aarch64:
     - .arch-aarch64
   needs:
     - package-ubuntu18.04-amd64
+    - package-ubuntu20.04-amd64
+    - package-ubuntu22.04-amd64
 
 package-centos7-x86_64:
   extends:
@@ -123,6 +132,8 @@ package-centos7-x86_64:
     - .arch-x86_64
   needs:
     - package-ubuntu18.04-amd64
+    - package-ubuntu20.04-amd64
+    - package-ubuntu22.04-amd64
 
 package-centos8-ppc64le:
   extends:
@@ -131,6 +142,8 @@ package-centos8-ppc64le:
     - .arch-ppc64le
   needs:
     - package-ubuntu18.04-amd64
+    - package-ubuntu20.04-amd64
+    - package-ubuntu22.04-amd64
 
 package-ubuntu18.04-amd64:
   extends:
@@ -148,4 +161,40 @@ package-ubuntu18.04-ppc64le:
   extends:
     - .package-build
     - .dist-ubuntu18.04
+    - .arch-ppc64le
+
+package-ubuntu20.04-amd64:
+  extends:
+    - .package-build
+    - .dist-ubuntu20.04
+    - .arch-amd64
+
+package-ubuntu20.04-arm64:
+  extends:
+    - .package-build
+    - .dist-ubuntu20.04
+    - .arch-arm64
+
+package-ubuntu20.04-ppc64le:
+  extends:
+    - .package-build
+    - .dist-ubuntu20.04
+    - .arch-ppc64le
+
+package-ubuntu22.04-amd64:
+  extends:
+    - .package-build
+    - .dist-ubuntu22.04
+    - .arch-amd64
+
+package-ubuntu22.04-arm64:
+  extends:
+    - .package-build
+    - .dist-ubuntu22.04
+    - .arch-arm64
+
+package-ubuntu22.04-ppc64le:
+  extends:
+    - .package-build
+    - .dist-ubuntu22.04
     - .arch-ppc64le

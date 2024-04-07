@@ -24,7 +24,7 @@ libnvidia-container-tools
 With Docker:
 ```bash
 # Generate docker images for a supported <os><version>
-make {ubuntu18.04, ubuntu16.04, debian10, debian9, centos7, amazonlinux2, opensuse-leap15.1}
+make {ubuntu22.04, ubuntu20.04, ubuntu18.04, ubuntu16.04, debian10, debian9, centos7, amazonlinux2, opensuse-leap15.1}
 
 # Or generate docker images for all supported distributions in the dist/ directory
 make docker
@@ -51,8 +51,8 @@ Refer to the [nvidia-container-runtime](https://github.com/NVIDIA/nvidia-contain
 cd $(mktemp -d) && mkdir rootfs
 sudo unshare --mount --pid --fork
 
-# Setup a rootfs based on Ubuntu 16.04 inside the new namespaces
-curl http://cdimage.ubuntu.com/ubuntu-base/releases/16.04/release/ubuntu-base-16.04.6-base-amd64.tar.gz | tar -C rootfs -xz
+# Setup a rootfs based on Ubuntu 22.04 inside the new namespaces
+curl http://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04.4-base-amd64.tar.gz | tar -C rootfs -xz
 useradd -R $(realpath rootfs) -U -u 1000 -s /bin/bash nvidia
 mount --bind rootfs rootfs
 mount --make-private rootfs

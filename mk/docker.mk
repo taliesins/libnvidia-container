@@ -14,13 +14,13 @@
 #
 
 # Version of golang to use in docker specific builds.
-GOLANG_VERSION := 1.17.1
+GOLANG_VERSION := 1.22.1
 
 # Global definitions. These are defined here to allow the docker targets to be
 # invoked directly without the root makefile.
 WITH_NVCGO   ?= yes
-WITH_LIBELF  ?= no
-WITH_TIRPC   ?= no
+WITH_LIBELF  ?= yes
+WITH_TIRPC   ?= yes
 WITH_SECCOMP ?= yes
 
 DOCKER       ?= docker
@@ -34,10 +34,10 @@ REVISION 	 ?= $(shell git rev-parse HEAD)
 include $(CURDIR)/versions.mk
 
 # Supported OSs by architecture
-AMD64_TARGETS := ubuntu20.04 ubuntu18.04 ubuntu16.04 debian10 debian9
+AMD64_TARGETS := ubuntu22.04 ubuntu20.04 ubuntu18.04 ubuntu16.04 debian10 debian9
 X86_64_TARGETS := centos7 centos8 rhel7 rhel8 amazonlinux2 opensuse-leap15.1
-PPC64LE_TARGETS := ubuntu18.04 ubuntu16.04 centos7 centos8 rhel7 rhel8
-ARM64_TARGETS := ubuntu18.04
+PPC64LE_TARGETS := ubuntu22.04 ubuntu20.04 ubuntu18.04 ubuntu16.04 centos7 centos8 rhel7 rhel8
+ARM64_TARGETS := ubuntu22.04
 AARCH64_TARGETS := centos7 rhel7 centos8 rhel8 amazonlinux2
 
 # Define top-level build targets
@@ -85,7 +85,6 @@ docker-aarch64: $(AARCH64_TARGETS)
 # ppc64le targets
 PPC64LE_TARGETS := $(patsubst %, %-ppc64le, $(PPC64LE_TARGETS))
 $(PPC64LE_TARGETS): ARCH := ppc64le
-$(PPC64LE_TARGETS): WITH_LIBELF := yes
 $(PPC64LE_TARGETS): %: --%
 docker-ppc64le: $(PPC64LE_TARGETS)
 
@@ -127,8 +126,6 @@ docker-amd64-verify: $(patsubst %, %-verify, $(AMD64_TARGETS)) \
 
 # private centos target with overrides
 --centos%: OS := centos
---centos%: WITH_TIRPC = yes
---centos%: WITH_LIBELF = yes
 --centos8%: BASEIMAGE = quay.io/centos/centos:stream8
 
 # private opensuse-leap target with overrides

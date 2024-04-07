@@ -18,13 +18,13 @@ RUN yum install -y \
         bzip2 \
         createrepo \
         elfutils-libelf-devel \
+        libntirpc-devel \
         gcc \
         git \
         libcap-devel \
         m4 \
         make \
         redhat-lsb-core \
-        libtirpc-devel \
         rpm-build \
         rpmlint \
         which && \

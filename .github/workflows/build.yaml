@@ -34,6 +34,12 @@ jobs:
     strategy:
       matrix:
         package:
+          - ubuntu22.04-arm64
+          - ubuntu22.04-amd64
+          - ubuntu22.04-ppc64le
+          - ubuntu20.04-arm64
+          - ubuntu20.04-amd64
+          - ubuntu20.04-ppc64le
           - ubuntu18.04-arm64
           - ubuntu18.04-amd64
           - ubuntu18.04-ppc64le
@@ -43,6 +49,18 @@ jobs:
         ispr:
           - ${{github.event_name == 'pull_request'}}
         exclude:
+          - ispr: true
+            package: ubuntu22.04-arm64
+          - ispr: true
+            package: ubuntu22.04-ppc64le          
+          - ispr: true
+            package: ubuntu20.04-amd64
+          - ispr: true
+            package: ubuntu20.04-arm64
+          - ispr: true
+            package: ubuntu20.04-ppc64le
+          - ispr: true
+            package: ubuntu18.04-amd64
           - ispr: true
             package: ubuntu18.04-arm64
           - ispr: true
@@ -63,6 +81,8 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: build ${{ matrix.package }} packages
+        env:
+          LIB_VERSION: 1.15.0
         run: |
           sudo apt-get install -y coreutils build-essential sed git bash make
           echo "Building packages"

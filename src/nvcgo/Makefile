@@ -32,14 +32,14 @@ HDR_NAME := $(LIB_NAME).h
 CTYPES_H := ctypes.h
 
 CGO_CFLAGS  := -std=gnu11 -O2
-CGO_LDFLAGS := -Wl,--gc-sections -Wl,-s -Wl,-soname,$(LIB_SONAME)
+CGO_LDFLAGS := -Wl,--gc-sections -Wl,-s -Wl,-soname=$(LIB_SONAME)
 
 build: $(OBJ_NAME)
 
 $(OBJ_NAME): $(wildcard $(CURDIR)/*.go) $(wildcard */*.go)
 	export CGO_CFLAGS="$(CGO_CFLAGS)"; \
 	export CGO_LDFLAGS="$(CGO_LDFLAGS)"; \
-	$(GO) build -o $(@) -ldflags "-s -w" -buildmode=c-shared .
+	$(GO) build -o $(@) -ldflags "-s -w" -buildvcs=false -buildmode=c-shared .
 
 install: $(OBJ_NAME)
 	$(INSTALL) -d -m 755 $(addprefix $(DESTDIR),$(libdir) $(includedir)/$(PKG_NAME))
