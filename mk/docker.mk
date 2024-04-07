@@ -19,8 +19,8 @@ GOLANG_VERSION := 1.22.1
 # Global definitions. These are defined here to allow the docker targets to be
 # invoked directly without the root makefile.
 WITH_NVCGO   ?= yes
-WITH_LIBELF  ?= no
-WITH_TIRPC   ?= no
+WITH_LIBELF  ?= yes
+WITH_TIRPC   ?= yes
 WITH_SECCOMP ?= yes
 
 DOCKER       ?= docker
@@ -85,7 +85,6 @@ docker-aarch64: $(AARCH64_TARGETS)
 # ppc64le targets
 PPC64LE_TARGETS := $(patsubst %, %-ppc64le, $(PPC64LE_TARGETS))
 $(PPC64LE_TARGETS): ARCH := ppc64le
-$(PPC64LE_TARGETS): WITH_LIBELF := yes
 $(PPC64LE_TARGETS): %: --%
 docker-ppc64le: $(PPC64LE_TARGETS)
 
@@ -127,8 +126,6 @@ docker-amd64-verify: $(patsubst %, %-verify, $(AMD64_TARGETS)) \
 
 # private centos target with overrides
 --centos%: OS := centos
---centos%: WITH_TIRPC = yes
---centos%: WITH_LIBELF = yes
 --centos8%: BASEIMAGE = quay.io/centos/centos:stream8
 
 # private opensuse-leap target with overrides

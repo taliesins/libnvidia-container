@@ -13,6 +13,7 @@ RUN zypper install -y \
         groff \
         libcap-devel \
         libelf-devel \
+        libntirpc-dev \
         libseccomp-devel \
         m4 \
         make \
@@ -33,8 +34,8 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 ARG WITH_NVCGO=no
-ARG WITH_LIBELF=no
-ARG WITH_TIRPC=no
+ARG WITH_LIBELF=yes
+ARG WITH_TIRPC=yes
 ARG WITH_SECCOMP=yes
 ENV WITH_NVCGO=${WITH_NVCGO}
 ENV WITH_LIBELF=${WITH_LIBELF}
